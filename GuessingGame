@@ -1,7 +1,7 @@
 import random
 
 
-userGuess = int(input())
+userGuess = int(input("Guess a number between 1 and 10: "))
 randomNum = random.randint(0, 10)
 
 while randomNum != randomNum
