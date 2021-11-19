@@ -1,2 +1,3 @@
- Import GuessingGame
- 
+import GuessingGame
+
+print(GuessingGame)
