@@ -1,3 +1,3 @@
-import GuessingGame
+import guessingGame
 
-print(GuessingGame)
+print(guessingGame)
