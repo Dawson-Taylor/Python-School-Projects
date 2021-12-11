@@ -5,11 +5,12 @@ def showInstructions():
     print('Movement commands: go South, go North, go East, go West')
     print("To add item to inventory: get 'item name'")
     print('To fight the boss type: "Fight Mammoth"')
+    print('You can choose to restart the game at any time by typing "restart" or "Restart"')
 
 
 def restart():
 
-    restartGame = input("Would you like to play again?")
+    restartGame = input("Would you like to play again (yes or y/no or n)? ")
     if restartGame == "yes" or restartGame == "y":
         main()
     if restartGame == "n" or restartGame == "no":
@@ -18,7 +19,7 @@ def restart():
     restart()
 
 
-def player_stat(currentRoom, Inventory, rooms):
+def playerStatus(currentRoom, Inventory, rooms):
     print('   -------------------------------------------')
     print('You are in the {}'.format(currentRoom))
     print('You see an item in the room', rooms[currentRoom].get('Item'))
@@ -33,16 +34,16 @@ Inventory = set()
 
 def main():
     rooms = {
-        'Grasslands': {'South': 'Caves', 'North': 'Beach', 'East': 'Icy Forest', 'West': 'Forest', 'Item': 'None'},
-        'Caves': {'North': 'Grasslands', 'West': 'Rocky Plateau', 'Item': 'Cave Moss Helmet'},
-        'Beach': {'South': 'Grasslands', 'East': 'Camp', 'West': 'Mountains', 'Item': 'Seashell Boots'},
-        'Icy Forest': {'North': 'Camp', 'East': 'Mammoth Fields', 'West': 'Grasslands', 'Item': 'Icy Shield'},
-        'Forest': {'North': 'Mountains', 'East': 'Grasslands', 'South': 'Rocky Plateau',
+        'Grasslands': {'go South': 'Caves', 'go North': 'Beach', 'go East': 'Icy Forest', 'go West': 'Forest', 'Item': 'None'},
+        'Caves': {'go North': 'Grasslands', 'go West': 'Rocky Plateau', 'Item': 'Cave Moss Helmet'},
+        'Beach': {'go South': 'Grasslands', 'go East': 'Camp', 'go West': 'Mountains', 'Item': 'Seashell Boots'},
+        'Icy Forest': {'go North': 'Camp', 'go East': 'Mammoth Fields', 'go West': 'Grasslands', 'Item': 'Icy Shield'},
+        'Forest': {'go North': 'Mountains', 'go East': 'Grasslands', 'go South': 'Rocky Plateau',
                    'Item': 'Leafy Chestplate'},
-        'Mountains': {'South': 'Forest', 'East': 'Beach', 'Item': 'Rock Club'},
-        'Rocky Plateau': {'North': 'Forest', 'East': 'Caves', 'Item': 'Rocky Leggings'},
-        'Camp': {'West': 'Beach', 'South': 'Icy Forest', 'Item': 'Fire Stick'},
-        'Mammoth Fields': {'West': 'Icy Forest', 'Item': 'Mammoth'}
+        'Mountains': {'go South': 'Forest', 'go East': 'Beach', 'Item': 'Rock Club'},
+        'Rocky Plateau': {'go North': 'Forest', 'go East': 'Caves', 'Item': 'Rocky Leggings'},
+        'Camp': {'go West': 'Beach', 'go South': 'Icy Forest', 'Item': 'Fire Stick'},
+        'Mammoth Fields': {'go West': 'Icy Forest', 'Item': 'Mammoth'}
     }
     currentRoom = 'Grasslands'
 
@@ -52,7 +53,7 @@ def main():
     # loop forever
     while True:
 
-        player_stat(currentRoom, Inventory, rooms)
+        playerStatus(currentRoom, Inventory, rooms)
         playerMove = input('Enter your move: ')
         if playerMove in ['Exit', 'exit']:
             currentRoom = 'Exit'
@@ -74,6 +75,10 @@ def main():
                 print('The mammoth has beaten you. It heads towards your camp.')
                 print('Thank you for playing.')
                 restart()
+        if playerMove == 'Restart' or 'restart':
+            main()
+        else:
+            continue
 
         try:
             currentRoom = rooms[currentRoom][playerMove]
