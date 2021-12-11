@@ -10,14 +10,13 @@ def showInstructions():
 def player_stat(currentRoom, Inventory, rooms):
     print('   -------------------------------------------')
     print('You are in the {}'.format(currentRoom))
-    print('You see an item in the room', rooms[currentRoom].get('Item')
+    print('You see an item in the room', rooms[currentRoom].get('Item'))
     print('Inventory:', Inventory)
     print('   -------------------------------------------')
 
 
 currentRoom = ''
 # define the player inventory which starts empty.
-Inventory = {}
 Inventory = set()
 
 def main():
@@ -42,23 +41,24 @@ def main():
     while True:
 
         player_stat(currentRoom, Inventory, rooms)
-        playerMove = str(input('Enter your move: '))
+        playerMove = input('Enter your move: ')
         if playerMove in ['Exit', 'exit']:
             currentRoom = 'Exit'
             print('Play again soon!')
             exit()
-        item = rooms[currentRoom].get('Item')  # get the item present, or None if there isn't one
-        if item is not None and playerMove == 'get ' + item:
-            if item in Inventory:
-            print('You already have this item in your inventory!')
-        else:
-            Inventory.append(item)
 
+        item = rooms[currentRoom].get('Item')  # get the item present, or None if there isn't one
+        if item != 'None' and playerMove == 'get ' + item:
+            if item in Inventory:
+                print('You already have this item in your inventory!')
+            else:
+                Inventory.add(item)
         try:
             currentRoom = rooms[currentRoom][playerMove]
         except KeyError:
             print("invalid move")
             continue
+
 
 
 main()
