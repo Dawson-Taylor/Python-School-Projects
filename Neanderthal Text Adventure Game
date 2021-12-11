@@ -10,6 +10,7 @@ def showInstructions():
 def player_stat(currentRoom, Inventory, rooms):
     print('   -------------------------------------------')
     print('You are in the {}'.format(currentRoom))
+    print('You see an item in the room', rooms[currentRoom].get('Item')
     print('Inventory:', Inventory)
     print('   -------------------------------------------')
 
@@ -17,11 +18,11 @@ def player_stat(currentRoom, Inventory, rooms):
 currentRoom = ''
 # define the player inventory which starts empty.
 Inventory = {}
-
+Inventory = set()
 
 def main():
     rooms = {
-        'Grasslands': {'go South': 'Caves', 'go North': 'Beach', 'go East': 'Icy Forest', 'go West': 'Forest'},
+        'Grasslands': {'go South': 'Caves', 'go North': 'Beach', 'go East': 'Icy Forest', 'go West': 'Forest', 'Item': 'None'},
         'Caves': {'go North': 'Grasslands', 'go West': 'Rocky Plateau', 'Item': 'Cave Moss Helmet'},
         'Beach': {'go South': 'Grasslands', 'go East': 'Camp', 'go West': 'Mountains', 'Item': 'Seashell Boots'},
         'Icy Forest': {'go North': 'Camp', 'go East': 'Mammoth Fields', 'go West': 'Grasslands', 'Item': 'Icy Shield'},
@@ -46,13 +47,12 @@ def main():
             currentRoom = 'Exit'
             print('Play again soon!')
             exit()
-        if playerMove is not str():
-            print('Try typing words.')
-        if playerMove == str('get ' + rooms[currentRoom]['Item']):
-            if rooms[currentRoom]['Item'] and Inventory:
-                print('You already have this item in your inventory!')
-            else:
-                Inventory.append(rooms[currentRoom]['Item'])
+        item = rooms[currentRoom].get('Item')  # get the item present, or None if there isn't one
+        if item is not None and playerMove == 'get ' + item:
+            if item in Inventory:
+            print('You already have this item in your inventory!')
+        else:
+            Inventory.append(item)
 
         try:
             currentRoom = rooms[currentRoom][playerMove]
