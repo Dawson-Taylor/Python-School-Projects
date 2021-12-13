@@ -65,6 +65,10 @@ def main():
             currentRoom = 'Exit'
             print('Play again soon!')
             exit()
+        # Allows the player to restart the program at any time
+        if playerMove in ['Restart', 'restart']:
+            Inventory.clear()
+            main()
         # Get the item present, or None if there isn't one
         item = rooms[currentRoom].get('Item')
         # Gets input from playerMovement to get an item if there is an item in the room
@@ -85,11 +89,6 @@ def main():
                 print('The mammoth has beaten you. It heads towards your camp.')
                 print('Thank you for playing.')
                 restart()
-        # Allows the player to restart the program at any time
-        if playerMove == 'Restart' or 'restart':
-            main()
-        else:
-            continue
         # Gets input for movement, items, or to fight the boss
         try:
             currentRoom = rooms[currentRoom][playerMove]
